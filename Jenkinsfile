@@ -10,7 +10,16 @@ podTemplate(label: label, containers: [
 volumes: [
   hostPathVolume(mountPath: '/home/gradle/.gradle', hostPath: '/tmp/jenkins/.gradle'),
   hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
-]) {
+]) 
+
+node {
+  wrap([$class: 'BuildUser']) {
+    def user = env.BUILD_USER_ID
+    println " user is - ${user}"
+  }
+}
+
+{
   node(label) {
     def myRepo = checkout scm
     def gitCommit = myRepo.GIT_COMMIT
@@ -18,14 +27,11 @@ volumes: [
     def shortGitCommit = "${gitCommit[0..10]}"
     def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
     
-    def job = Jenkins.getInstance().getItemByFullName(env.JOB_BASE_NAME, Job.class)
-	def build = job.getBuildByNumber(env.BUILD_ID as int)
-	def userId = build.getCause(Cause.UserIdCause).getUserId()
  
     stage('Test') {
       try {
         container('gradle') {
-        println " user is - ${userId}"
+        
           sh """
             pwd
             echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
