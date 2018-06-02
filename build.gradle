@@ -1,0 +1,65 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.2.RELEASE'
+	}
+	repositories {
+	jcenter()
+		mavenCentral()
+	}
+	dependencies {
+		classpath("com.palantir:jacoco-coverage:0.4.0")
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
+apply plugin: 'maven'
+
+
+group    = "com.cloudcompilerr"
+version  = "0.0.1-SNAPSHOT"
+sourceCompatibility = 1.8
+
+// create  a fat jar using the jar task from java plugin
+jar {
+    manifest {
+        attributes "Main-Class": "com.cloudcompilerr.AppEntry"
+    }
+ 
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+
+repositories {
+	mavenCentral()
+}
+
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.projectlombok:lombok', { changing =true })
+	testCompile(
+	'org.springframework.boot:spring-boot-starter-test',
+	'org.hamcrest:hamcrest-all:1.3'
+	)
+	
+}
+
+jacocoTestReport {
+  afterEvaluate {
+    classDirectories = files(classDirectories.files.collect {
+      fileTree(dir: it, exclude: [
+         '**/*AppEntry**'
+        ])
+       })
+      }
+     }
+
+   
