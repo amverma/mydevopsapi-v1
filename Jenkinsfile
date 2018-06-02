@@ -10,16 +10,7 @@ podTemplate(label: label, containers: [
 volumes: [
   hostPathVolume(mountPath: '/home/gradle/.gradle', hostPath: '/tmp/jenkins/.gradle'),
   hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
-]) 
-
-node {
-  wrap([$class: 'BuildUser']) {
-    def user = env.BUILD_USER_ID
-    println " user is - ${user}"
-  }
-}
-
-{
+]) {
   node(label) {
     def myRepo = checkout scm
     def gitCommit = myRepo.GIT_COMMIT
@@ -31,7 +22,7 @@ node {
     stage('Test') {
       try {
         container('gradle') {
-        
+        println " user is - ${currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()}"
           sh """
             pwd
             echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
