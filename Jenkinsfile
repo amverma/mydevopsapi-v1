@@ -21,6 +21,7 @@ volumes: [
     stage('Test') {
       try {
         container('gradle') {
+        println " user is - ${whoami}"
           sh """
             pwd
             echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
