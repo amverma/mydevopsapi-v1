@@ -29,7 +29,7 @@ volumes: [
         }
     stage('Build') {
       container('gradle') {
-       sh "gradle test"
+       // sh "gradle test"
         sh "gradle build"
       }
     }
