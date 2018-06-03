@@ -19,27 +19,17 @@ volumes: [
     def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
     
  
-    stage('Test') {
-      try {
-        container('gradle') {
-        println " user is - ${currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()}"
-        sudo usermod -aG docker jenkins
-        sudo usermod -aG docker admin
-          sh """
-            pwd
-            echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
-            echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
-            gradle test
-            """
+    stage('Check running containers') {
+            container('docker') {
+                // example to show you can run docker commands when you mount the socket
+                sh 'hostname'
+                sh 'hostname -i'
+                sh 'docker ps'
+            }
         }
-      }
-      catch (exc) {
-        println "Failed to test - ${currentBuild.fullDisplayName}"
-        throw(exc)
-      }
-    }
     stage('Build') {
       container('gradle') {
+       sh "gradle test"
         sh "gradle build"
       }
     }
