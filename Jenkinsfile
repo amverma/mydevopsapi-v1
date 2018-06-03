@@ -30,7 +30,8 @@ volumes: [
     stage('Build') {
       container('gradle') {
       // sh 'gradle test'
-        ./gradlew clean build
+      chmod 777 usr
+        sh 'gradle clean build'
       }
     }
     stage('Create Docker images') {
