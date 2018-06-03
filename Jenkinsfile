@@ -23,6 +23,7 @@ volumes: [
       try {
         container('gradle') {
         println " user is - ${currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()}"
+        sudo mount -o remount,exec /var
           sh """
             pwd
             echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
