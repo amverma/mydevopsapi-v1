@@ -1,5 +1,5 @@
 def label = "worker-${UUID.randomUUID().toString()}"
-podTemplate(label: label,, runAsUser: 0, fsGroup: 0,
+podTemplate(label: label,runAsUser: 0, fsGroup: 0,
  containers: [
   //containerTemplate(name: 'git', image: 'alpine/git', ttyEnabled: true, command: 'cat'),
   //containerTemplate(name: 'maven', image: 'maven:3.3.9-jdk-8-alpine', command: 'cat', ttyEnabled: true),
