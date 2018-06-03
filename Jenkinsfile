@@ -30,7 +30,7 @@ volumes: [
     stage('Build') {
       container('gradle') {
       // sh 'gradle test'
-        sh './gradlew clean build'
+        ./gradlew clean build
       }
     }
     stage('Create Docker images') {
