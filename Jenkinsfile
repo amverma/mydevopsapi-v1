@@ -27,14 +27,15 @@ volumes: [
                 sh 'hostname'
                 sh 'hostname -i'
                 sh 'docker ps'
-                sh 'groupadd --system --gid 10000 gradle'
-	            sh 'useradd --system --gid gradle --uid 10000 --shell /bin/bash --create-home gradle'
+                sh 'chmod +x gradlew'
+                
             }
         }
     stage('Build') {
       container('gradle') {
+      sh 'chmod +x gradlew'
       // sh 'gradle test'
-        sh 'gradle clean build'
+        sh './gradlew clean build'
       }
     }
     stage('Create Docker images') {
