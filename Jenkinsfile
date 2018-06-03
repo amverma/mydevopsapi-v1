@@ -1,5 +1,5 @@
 def label = "worker-${UUID.randomUUID().toString()}"
-podTemplate(label: label,runAsUser: 0, fsGroup: 0,
+podTemplate(label: label,
  containers: [
   //containerTemplate(name: 'git', image: 'alpine/git', ttyEnabled: true, command: 'cat'),
   //containerTemplate(name: 'maven', image: 'maven:3.3.9-jdk-8-alpine', command: 'cat', ttyEnabled: true),
@@ -27,6 +27,8 @@ volumes: [
                 sh 'hostname'
                 sh 'hostname -i'
                 sh 'docker ps'
+                sh 'groupadd --system --gid 10000 gradle \'
+	            sh 'useradd --system --gid gradle --uid 10000 --shell /bin/bash --create-home gradle'
             }
         }
     stage('Build') {
