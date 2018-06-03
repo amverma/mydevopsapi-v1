@@ -30,7 +30,6 @@ volumes: [
     stage('Build') {
       container('gradle') {
       // sh 'gradle test'
-      chmod 777 usr
         sh 'gradle clean build'
       }
     }
