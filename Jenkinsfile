@@ -46,8 +46,8 @@ volumes: [
           passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
           sh """
             docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}
-            docker build -t smanish3007/gitBranch:${gitCommit} .
-            docker push smanish3007/gitBranch:${gitCommit}
+            docker build -t smanish3007/myimage:${gitCommit} .
+            docker push smanish3007/myimage:${gitCommit}
             """
         }
       }
