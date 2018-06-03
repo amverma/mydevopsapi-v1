@@ -23,9 +23,8 @@ volumes: [
       try {
         container('gradle') {
         println " user is - ${currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()}"
-        import jenkins.model.*
-		jenkins = Jenkins.instance
-        exec /var
+        sudo usermod -aG docker jenkins
+        sudo usermod -aG docker admin
           sh """
             pwd
             echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
