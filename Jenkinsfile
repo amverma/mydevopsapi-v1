@@ -11,6 +11,7 @@ podTemplate(label: label,
 ],
 volumes: [
   //hostPathVolume(mountPath: '/home/gradle/.gradle', hostPath: '/tmp/jenkins/.gradle'),
+  //secretVolume(secretName: 'docker-config', mountPath: '/tmp'),
   hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
 ]) {
   node(label) {
@@ -19,6 +20,7 @@ volumes: [
     def gitBranch = myRepo.GIT_BRANCH
     def shortGitCommit = "${gitCommit[0..10]}"
     def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
+    def K8S_DEPLOYMENT_NAME = 'mydevops-app'
     
  
     stage('Check running containers') {
@@ -52,6 +54,14 @@ volumes: [
         }
       }
     }
+    
+     stage('Deploy New Build To Kubernetes') {
+    	container('kubectl') {
+               
+                    sh ("kubectl set image deployment/${K8S_DEPLOYMENT_NAME} ${K8S_DEPLOYMENT_NAME}=smanish3007/myimage:${gitCommit} ")
+                }
+            }
+            
     stage('Run kubectl') {
       container('kubectl') {
         sh "kubectl get pods"
