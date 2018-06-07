@@ -305,9 +305,11 @@ roleRef: cluster-admin
 Run below command to install jenkins-
 helm install -f jenkins-config.yaml –name jenkins –namespace jenkins stable/jenkins
 helm init
+<br>
 Below command is very important-
-jenkins namespace is not allowed through default service to create pods
-kubectl create clusterrolebinding jenkins –clusterrole cluster-admin –serviceaccount=jenkins:default
+jenkins namespace is not allowed through default service to create pods </br>
+kubectl create clusterrolebinding jenkins --clusterrole=cluster-admin --serviceaccount=jenkins:default
+</br>
 Get your ‘admin’ user password by running:
 printf $(kubectl get secret –namespace jenkins jenkins -o jsonpath=”{.data.jenkins-admin-password}” | base64 –decode);echo
 Get the Jenkins URL to visit by running these commands in the same shell:
