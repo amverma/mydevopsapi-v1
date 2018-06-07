@@ -30,7 +30,7 @@ spec:
       - name: mydevopsapi-v1
         image: smanish3007/mydevopsapi-v1
         ports:
-        - containerPort: mydevopsapi-v1
+        - containerPort: 9090
         livenessProbe:
           httpGet:
             path: /health
