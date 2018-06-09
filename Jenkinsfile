@@ -1,7 +1,4 @@
 def label = "worker-${UUID.randomUUID().toString()}"
-def kubeSubst(placeholder, value, file) {
-  		sh "sed -i.bak s/:\\\${$placeholder}/:$value/g $file.yml"
-		}
     
 podTemplate(label: label,
  containers: [
@@ -66,7 +63,6 @@ volumes: [
               //    sh("kubectl apply -f ./deployment/test/service.yaml")
                 //    sh("kubectl create configmap mydevopsapi-config --from-file=./deployment/test/")
                 sh("kubectl create configmap mydevopsapi-config --from-literal=COMMIT_ID=${gitCommit} -o yaml --dry-run | kubectl replace --force  -f -")
-                
                 sh("sed -i s/IMAGE_TAG/${gitCommit}/ ./deployment/test/service.yaml")
                 sh("kubectl apply -f ./deployment/test/")
                 }

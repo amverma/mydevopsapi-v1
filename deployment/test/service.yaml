@@ -29,7 +29,8 @@ spec:
       containers:
       - name: mydevopsapi-v1
         command: [ "/bin/sh", "-c", "env" ]
-        image: smanish3007/myimage:${IMAGE_TAG}
+        # IMAGE_TAG is dynamically passed from Jenkisfile using sed command
+        image: smanish3007/myimage:IMAGE_TAG
         ports:
         - containerPort: 9090
        # env:
