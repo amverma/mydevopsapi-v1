@@ -58,10 +58,9 @@ volumes: [
      stage('Deploy New Build To Kubernetes') {
     	container('kubectl') {
                
-                  //  sh ("kubectl set image deployment/${K8S_DEPLOYMENT_NAME} ${K8S_DEPLOYMENT_NAME}=smanish3007/myimage:${gitCommit} ")
-                 // sh("kubectl delete deployment hello-node")
-                  //sh("kubectl run hello-node --image=smanish3007/myimage:${gitCommit} --port=8080 --expose=true")
-                  sh("kubectl apply -f ./deployment/test/service.yaml")
+               // below comand to run kubectl using a config file present in /deployment/test folder
+              //    sh("kubectl apply -f ./deployment/test/service.yaml")
+                    sh("kubectl create configmap mydevopsapi-config --from-file=./deployment/test/")
                 }
             }
             
