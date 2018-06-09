@@ -29,7 +29,7 @@ spec:
       containers:
       - name: mydevopsapi-v1
         command: [ "/bin/sh", "-c", "env" ]
-        image: smanish3007/myimage:$(COMMIT_ID_KEY)
+        image: smanish3007/myimage:${IMAGE_TAG}
         ports:
         - containerPort: 9090
        # env:
