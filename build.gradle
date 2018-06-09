@@ -27,7 +27,7 @@ sourceCompatibility = 1.8
 // create  a fat jar using the jar task from java plugin
 jar {
     manifest {
-        attributes "Main-Class": "com.cloudcompilerr.AppEntry"
+        attributes "Main-Class": "com.cloudcompilerr.devops.MyDevOpsApplication"
     }
  
     from {
@@ -56,7 +56,7 @@ jacocoTestReport {
   afterEvaluate {
     classDirectories = files(classDirectories.files.collect {
       fileTree(dir: it, exclude: [
-         '**/*AppEntry**'
+         '**/*MyDevOpsApplication**'
         ])
        })
       }
