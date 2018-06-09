@@ -28,7 +28,8 @@ spec:
     spec:
       containers:
       - name: mydevopsapi-v1
-        image: smanish3007/myimage:8437988d3d72e7cd8195b6895a59cb3263df9cf3
+        command: [ "/bin/sh", "-c", "env" ]
+        image: smanish3007/myimage:$(COMMIT_ID_KEY)
         ports:
         - containerPort: 9090
        # env:
@@ -38,13 +39,13 @@ spec:
        #   value: production
         env:
         # Define the environment variable
-           - name: TAG_ID
+           - name: COMMIT_ID_KEY
              valueFrom:
                configMapKeyRef:
-                 # The ConfigMap containing the value you want to assign to TAG_ID key
+                 # The ConfigMap containing the value you want to assign to COMMIT_ID_KEY
                  name: mydevopsapi-config
                  # Specify the key associated with the value
-                 key: commit.id
+                 key: COMMIT_ID
         livenessProbe:
           httpGet:
             path: /health
