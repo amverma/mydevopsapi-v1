@@ -1,4 +1,8 @@
 def label = "worker-${UUID.randomUUID().toString()}"
+def kubeSubst(placeholder, value, file) {
+  		sh "sed -i.bak s/:\\\${$placeholder}/:$value/g $file.yml"
+		}
+    
 podTemplate(label: label,
  containers: [
   //containerTemplate(name: 'git', image: 'alpine/git', ttyEnabled: true, command: 'cat'),
@@ -21,9 +25,6 @@ volumes: [
     def shortGitCommit = "${gitCommit[0..10]}"
     def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
     def K8S_DEPLOYMENT_NAME = 'mydevops-app'
-    def kubeSubst(placeholder, value, file) {
-  		sh "sed -i.bak s/:\\\${$placeholder}/:$value/g $file.yml"
-		}
     
  
     stage('Check running containers') {
@@ -65,6 +66,8 @@ volumes: [
               //    sh("kubectl apply -f ./deployment/test/service.yaml")
                 //    sh("kubectl create configmap mydevopsapi-config --from-file=./deployment/test/")
                 sh("kubectl create configmap mydevopsapi-config --from-literal=COMMIT_ID=${gitCommit} -o yaml --dry-run | kubectl replace --force  -f -")
+                
+                
                 kubeSubst('IMAGE_TAG', ${gitCommit}, './deployment/test/service.yaml')
                     sh("kubectl apply -f ./deployment/test/")
                 }
