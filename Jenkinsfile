@@ -67,7 +67,7 @@ volumes: [
                 //    sh("kubectl create configmap mydevopsapi-config --from-file=./deployment/test/")
                 sh("kubectl create configmap mydevopsapi-config --from-literal=COMMIT_ID=${gitCommit} -o yaml --dry-run | kubectl replace --force  -f -")
                 
-                sh ("sed -i.bak s/:\\\IMAGE_TAG/:${gitCommit}/g ./deployment/test/service.yaml")
+                sh("sed -i s/IMAGE_TAG/${gitCommit}/ ./deployment/test/service.yaml")
                 sh("kubectl apply -f ./deployment/test/")
                 }
             }
