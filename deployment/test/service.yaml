@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: mydevopsapi-v1
-        image: smanish3007/mydevopsapi-v1
+        image: smanish3007/myimage:$(TAG_ID)
         ports:
         - containerPort: 9090
        # env:
@@ -36,6 +36,15 @@ spec:
        #   value: amq
       #  - name: SPRING_PROFILES_ACTIVE
        #   value: production
+        env:
+        # Define the environment variable
+           - name: TAG_ID
+             valueFrom:
+               configMapKeyRef:
+                 # The ConfigMap containing the value you want to assign to TAG_ID key
+                 name: mydevopsapi-config
+                 # Specify the key associated with the value
+                 key: commit.id
         livenessProbe:
           httpGet:
             path: /health

@@ -60,7 +60,9 @@ volumes: [
                
                // below comand to run kubectl using a config file present in /deployment/test folder
               //    sh("kubectl apply -f ./deployment/test/service.yaml")
-                    sh("kubectl create configmap mydevopsapi-config --from-file=./deployment/test/")
+                //    sh("kubectl create configmap mydevopsapi-config --from-file=./deployment/test/")
+                sh("kubectl create configmap mydevopsapi-config --from-literal=commit.id=${gitCommit}")
+                    sh("kubectl apply -f ./deployment/test/")
                 }
             }
             
