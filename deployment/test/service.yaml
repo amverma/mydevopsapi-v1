@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: mydevopsapi-v1
-        image: smanish3007/myimage:$TAG_ID
+        image: smanish3007/myimage:TAG_ID
         ports:
         - containerPort: 9090
        # env:
