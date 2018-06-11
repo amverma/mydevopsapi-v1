@@ -40,7 +40,7 @@ volumes: [
             } else {
             echo 'I execute elsewhere'
         }
-        }
+    }
     stage('Build') {
       //container('gradle') {
       sh 'chmod +x gradlew'
