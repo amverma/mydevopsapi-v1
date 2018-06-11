@@ -25,6 +25,10 @@ volumes: [
     
  
     stage('Check running containers') {
+    
+    if (${gitBranch} == 'master') {
+            echo 'I only execute on the master branch'
+        
             container('docker') {
                 // example to show you can run docker commands when you mount the socket
                 sh 'hostname'
@@ -33,6 +37,9 @@ volumes: [
                 sh 'chmod +x gradlew'
                 
             }
+            } else {
+            echo 'I execute elsewhere'
+        }
         }
     stage('Build') {
       //container('gradle') {
