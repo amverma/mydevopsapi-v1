@@ -51,9 +51,9 @@ volumes: [
     stage('Create Docker images') {
       container('docker') {
         withCredentials([[$class: 'UsernamePasswordMultiBinding',
-          credentialsId: 'dockerhub',
-          usernameVariable: 'DOCKER_HUB_USER',
-          passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
+          credentialsId: 'bsldockerhub',
+          usernameVariable: 'amit2.verma@birlasoft.com',
+          passwordVariable: 'India@123']]) {
           sh """
             docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}
             docker build -t smanish3007/myimage:${gitCommit} .
