@@ -55,9 +55,10 @@ volumes: [
           usernameVariable: 'amit2.verma@birlasoft.com',
           passwordVariable: 'India@123']]) {
           sh """
-            docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}
-            docker build -t smanish3007/myimage:${gitCommit} .
-            docker push smanish3007/myimage:${gitCommit}
+            //docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}
+            docker login -u amit2.verma@birlasoft.com -p India@123
+            docker build -t apidevops/myimage:${gitCommit} .
+            docker push apidevops/myimage:${gitCommit}
             """
         }
       }
