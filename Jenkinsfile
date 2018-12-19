@@ -51,7 +51,7 @@ volumes: [
     stage('Create Docker images') {
       container('docker') {
         withCredentials([[$class: 'UsernamePasswordMultiBinding',
-          credentialsId: '01e0745b-1c0d-466d-bc60-5b86bf35d89f',
+          credentialsId: 'bsldockerhub',
           usernameVariable: 'DOCKER_HUB_USER',
           passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
           sh """
