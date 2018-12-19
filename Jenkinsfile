@@ -52,11 +52,10 @@ volumes: [
       container('docker') {
         withCredentials([[$class: 'UsernamePasswordMultiBinding',
           credentialsId: '01e0745b-1c0d-466d-bc60-5b86bf35d89f',
-          usernameVariable: 'amit2.verma@birlasoft.com',
-          passwordVariable: 'India@123']]) {
+          usernameVariable: 'DOCKER_HUB_USER',
+          passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
           sh """
-            //docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}
-            docker login -u amit2.verma@birlasoft.com -p India@123
+            docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}
             docker build -t apidevops/myimage:${gitCommit} .
             docker push apidevops/myimage:${gitCommit}
             """
